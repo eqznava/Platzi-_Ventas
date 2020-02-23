@@ -1,34 +1,63 @@
+import sys
 
-
-clients = 'Pablo, Ricardo'
+clients = ['Pablo', 'Ricardo']
 
 
 def create_client(client_name):
     global clients
 
     if client_name not in clients:
-        _add_comma()
-        clients += client_name
+        clients.append(client_name)
     else:
         print('Client already is in the client\'s list')
 
+
 def list_clients():
-    global clients
-    print(clients)
+    for idx, client in enumerate(clients):
+        print('{}: {}'.format(idx, client))
+
 
 def _update_clients(client_name,updated_client_name):
     global clients
 
     if client_name in clients:
-        clients = clients.replace(client_name, updated_client_name)
+        index = clients.index(client_name)
+        clients[index] = updated_name
     else:
         print('Client is not in clients list')
 
-def _add_comma():
+
+def delete_client(client_name):
     global clients
 
-    clients += ', '
+    if client_name in clients:
+        clients.remove(client_name)
+    else:
+        print('Client is not in clients list')
 
+
+def search_client(client_name):
+    for client in clients:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
+def _get_client_name():
+    client_name = None
+
+    while not client_name:
+        client_name = input('What is the client name?\n')
+
+        if client_name == 'exit':
+            client_name = None
+            break
+
+    if not client_name:
+        sys.exit()
+
+    return client_name
 
 def _print_welcome():
     print('*' * 30)
@@ -36,12 +65,10 @@ def _print_welcome():
     print('*' * 30)
     print('What would you like to do today')
     print('[C]reate client')
+    print('[L]ist client')
     print('[U]pdate client')
     print('[D]elete client')
-
-def _get_client_name():
-    list_clients()
-    return input('What is the client name?\n')
+    print('[S]earch client')
 
 
 if __name__ == '__main__':
@@ -54,12 +81,24 @@ if __name__ == '__main__':
         client_name = _get_client_name()
         create_client(client_name)
         list_clients()
+    elif command == 'L':
+        list_clients()
     elif command == 'D':
-        pass
+        client_name = _get_client_name()
+        delete_client(client_name)
+        list_clients()
     elif command == 'U':
         client_name = _get_client_name()
         updated_client_name = input('What is the updated client name?\n')
         _update_clients(client_name, updated_client_name)
         list_clients()
+    elif command == 'S':
+        client_name = _get_client_name()
+        found = search_client(client_name)
+
+        if found:
+            print('The client is in the client\'s list')
+        else:
+            print('The client: {} is not in our client\'s list'.format(client_name))
     else:
         print('Invalid command')
