@@ -9,7 +9,7 @@ def create_client(client_name):
     if client_name not in clients:
         clients.append(client_name)
     else:
-        print('Client already is in the client\'s list')
+        print('Client "{}" already is in the client\'s list'.format(client_name))
 
 
 def list_clients():
@@ -22,7 +22,7 @@ def _update_clients(client_name,updated_client_name):
 
     if client_name in clients:
         index = clients.index(client_name)
-        clients[index] = updated_name
+        clients[index] = updated_client_name
     else:
         print('Client is not in clients list')
 
@@ -97,8 +97,8 @@ if __name__ == '__main__':
         found = search_client(client_name)
 
         if found:
-            print('The client is in the client\'s list')
+            print('The client "{}" is in the client\'s list'.format(client_name))
         else:
-            print('The client: {} is not in our client\'s list'.format(client_name))
+            print('The client: "{}" is not in our client\'s list'.format(client_name))
     else:
         print('Invalid command')
